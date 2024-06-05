@@ -79,7 +79,7 @@
                     </div>
                 </div>
 
-                <button type="submit" class="btn btn-primary btn-block">Create Post</button>
+                <button type="submit" class="btn btn-primary btn-block">Create Postttt</button>
             </form>
         </div>
     </div>
