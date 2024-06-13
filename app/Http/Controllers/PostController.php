@@ -30,7 +30,8 @@ return view("posts.create");
 
 }
 
-function store(
-){
-    
+function store(){
+
+return to_route("posts.index");
+
 }
