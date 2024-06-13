@@ -28,10 +28,15 @@ function create(){
 return view("posts.create");
 }
 
-}
 
 function store(){
+// $data = $_POST;
+$data = request()->all();
 
 return to_route("posts.index");
 
 }
+
+}
+
+
