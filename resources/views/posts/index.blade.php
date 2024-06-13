@@ -72,7 +72,7 @@
                     <td>{{ $post['createdAt'] }}</td>
                     <td class="action-btns">
                         <a href=" {{ route('posts.show',$post['id']) }} "><i class="fas fa-eye" title="View"></i></a>
-                        <i class="fas fa-edit" title="Edit"></i>
+                        <a href="{{route('posts.edit',$post['id']) }}"><i class="fas fa-edit" title="Edit"></i></a>
                         <i class="fas fa-trash" title="Delete"></i>
                     </td>
                 </tr>

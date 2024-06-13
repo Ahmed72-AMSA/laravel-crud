@@ -37,6 +37,12 @@ return to_route("posts.index");
 
 }
 
+function edit(){
+$data = request()->all();
+
+return view("posts.edit");
+}
+
 }
 
 
