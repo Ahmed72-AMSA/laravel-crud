@@ -82,7 +82,7 @@
                     <th scope="row">{{ $post['id'] }}</th>
                     <td>{{ $post['title'] }}</td>
                     <td>{{ $post['postedBy'] }}</td>
-                    <td>{{ $post['createdAt'] }}</td>
+                    <td>{{ $post['created_at'] }}</td>
                     <td class="action-btns">
                         <a href="{{ route('posts.show',$post['id']) }}"><i class="fas fa-eye" title="View"></i></a>
                         <a href="{{route('posts.edit',$post['id']) }}"><i class="fas fa-edit" title="Edit"></i></a>

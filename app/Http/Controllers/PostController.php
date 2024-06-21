@@ -2,66 +2,79 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\Post;
 
 class PostController extends Controller
 {
+    // Fetch all posts
     function index(){
-    $allPosts = [
-    ['id'=>1 , 'title'=>'php' , 'postedBy'=>'Ahmed','createdAt'=>date('Y-m-d H:i:s')],
-    ['id'=>2 , 'title'=>'laravel', 'postedBy'=>'Mohammed','createdAt'=>date('Y-m-d H:i:s')],
-    ];
+        $allPosts = Post::all();
+        return view("posts.index", ['posts' => $allPosts]);
+    }
 
-        return view("posts.index",['posts'=>$allPosts]);
+    // Fetch a single post by ID
+    public function show($postId){
+        $singlePost = Post::find($postId);
+
+        if(!$singlePost) {
+            return redirect()->route('posts.index')->with('error', 'Post not found');
+        }
+
+        return view("posts.show", ['post' => $singlePost]);
+    }
+
+    // Return the create post form
+    public function create(){
+        return view("posts.create");
+    }
+
+    // Store a new post
+    public function store(){
+        $data = request()->only(["title","description"]);
+
+        Post::create($data);
+
+        return redirect()->route("posts.index")->with('success', 'Post created successfully');
+    }
+
+    // Return the edit post form with post data
+    public function edit($postId){
+        $post = Post::find($postId);
+
+        if(!$post) {
+            return redirect()->route('posts.index')->with('error', 'Post not found');
+        }
+
+        return view("posts.edit", ['post' => $post]);
+    }
+
+    // Update an existing post
+    public function update($postId){
+        $data = request()->all();
+        $post = Post::find($postId);
+
+        if(!$post) {
+            return redirect()->route('posts.index')->with('error', 'Post not found');
+        }
+
+        $post->update($data);
+
+        return redirect()->route("posts.show", $postId)->with('success', 'Post updated successfully');
     }
 
 
 
-public function show($postId){
-    $singlePost = ['id'=>1 , 'title'=>'php' , 'postedBy'=>'Ahmed','createdAt'=>date('Y-m-d H:i:s') , 'description' => 'this is my php blog'];
 
+    // Delete a post
+    public function destroy($postId) {
+        $post = Post::find($postId);
 
-    return view("posts.show",['post'=>$singlePost]);
+        if(!$post) {
+            return redirect()->route('posts.index')->with('error', 'Post not found');
+        }
+
+        $post->delete();
+
+        return redirect()->route("posts.index")->with('success', 'Post deleted successfully');
+    }
 }
-
-public function create(){
-return view("posts.create");
-}
-
-
-public function store(){
-// $data = $_POST;
-$data = request()->all();
-
-return to_route("posts.index");
-
-}
-
-public function edit(){
-$data = request()->all();
-
-return view("posts.edit");
-}
-
-public function update(){
-$title = request()->title;
-$description = request()->description;
-$post_creator = request()->creator;
-
-
-// dd($title , $description , $post_creator);
-
-
-return to_route("posts.show",1);
-
-}
-
-public function destroy() {
-return to_route("posts.index");
-}
-
-
-
-}
-
-
