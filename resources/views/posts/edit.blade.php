@@ -47,8 +47,9 @@
     <div class="create-post-container">
         <div class="create-post-card">
             <h2 class="text-center mb-4">Edit Post</h2>
-            <form method="POST" action="{{ route('posts.store') }}">
+            <form method="POST" action="{{ route('posts.update',1) }}">
                 @csrf
+                @method('put')
                 <div class="mb-3">
                     <label for="title" class="form-label">Title</label>
                     <div class="input-group">

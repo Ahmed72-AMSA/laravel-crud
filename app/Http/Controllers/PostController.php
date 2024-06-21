@@ -17,19 +17,19 @@ class PostController extends Controller
 
 
 
-function show($postId){
+public function show($postId){
     $singlePost = ['id'=>1 , 'title'=>'php' , 'postedBy'=>'Ahmed','createdAt'=>date('Y-m-d H:i:s') , 'description' => 'this is my php blog'];
 
 
     return view("posts.show",['post'=>$singlePost]);
 }
 
-function create(){
+public function create(){
 return view("posts.create");
 }
 
 
-function store(){
+public function store(){
 // $data = $_POST;
 $data = request()->all();
 
@@ -37,10 +37,23 @@ return to_route("posts.index");
 
 }
 
-function edit(){
+public function edit(){
 $data = request()->all();
 
 return view("posts.edit");
+}
+
+function update(){
+$title = request()->title;
+$description = request()->description;
+$post_creator = request()->creator;
+
+
+// dd($title , $description , $post_creator);
+
+
+return to_route("posts.show",1);
+
 }
 
 }
