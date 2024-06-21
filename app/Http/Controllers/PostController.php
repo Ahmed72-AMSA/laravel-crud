@@ -14,7 +14,15 @@ class PostController extends Controller
 
     // Fetch a single post by ID
     public function show($postId){
-        $singlePost = Post::find($postId);
+        // $singlePost = Post::find($postId);
+
+        // // Eloquent builder -> collection object 
+        // $singlePost = Post::where('id',$postId)->get();
+
+        
+        // Eloquent builder -> model object
+        $singlePost = Post::where('id',$postId)->first();
+
 
         if(!$singlePost) {
             return redirect()->route('posts.index')->with('error', 'Post not found');
