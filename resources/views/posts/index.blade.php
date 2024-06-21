@@ -42,6 +42,19 @@
         .action-btns a i:hover, .action-btns i:hover {
             color: #007bff;
         }
+        .action-btns form {
+            display: inline;
+        }
+        .action-btns button {
+            background: none;
+            border: none;
+            padding: 0;
+            color: inherit;
+            cursor: pointer;
+        }
+        .action-btns button i:hover {
+            color: #007bff;
+        }
     </style>
 </head>
 <body>
@@ -71,20 +84,58 @@
                     <td>{{ $post['postedBy'] }}</td>
                     <td>{{ $post['createdAt'] }}</td>
                     <td class="action-btns">
-                        <a href=" {{ route('posts.show',$post['id']) }} "><i class="fas fa-eye" title="View"></i></a>
+                        <a href="{{ route('posts.show',$post['id']) }}"><i class="fas fa-eye" title="View"></i></a>
                         <a href="{{route('posts.edit',$post['id']) }}"><i class="fas fa-edit" title="Edit"></i></a>
-                        <i class="fas fa-trash" title="Delete"></i>
+                        <form action="{{ route('posts.destroy', $post['id']) }}" method="POST" class="delete-form" style="display: inline;">
+                            @csrf
+                            @method('DELETE')
+                            <button type="button" class="delete-btn" data-toggle="modal" data-target="#confirmDeleteModal" data-id="{{ $post['id'] }}"><i class="fas fa-trash" title="delete"></i></button>
+                        </form>
                     </td>
                 </tr>
                 @endforeach
             </tbody>
         </table>
     </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmDeleteModalLabel">Confirm Deletion</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to delete this post?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                    <button type="button" class="btn btn-danger" id="confirmDelete">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 @endsection
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            let formToSubmit;
 
+            $('.delete-btn').click(function() {
+                formToSubmit = $(this).closest('form');
+            });
+
+            $('#confirmDelete').click(function() {
+                formToSubmit.submit();
+            });
+        });
+    </script>
 </body>
 </html>

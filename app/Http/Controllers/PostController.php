@@ -43,7 +43,7 @@ $data = request()->all();
 return view("posts.edit");
 }
 
-function update(){
+public function update(){
 $title = request()->title;
 $description = request()->description;
 $post_creator = request()->creator;
@@ -55,6 +55,12 @@ $post_creator = request()->creator;
 return to_route("posts.show",1);
 
 }
+
+public function destroy() {
+return to_route("posts.index");
+}
+
+
 
 }
 
